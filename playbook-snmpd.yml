@@ -1,0 +1,57 @@
+---
+- hosts: all
+  tasks: 
+    - name: install snmp
+      become: true
+      become_user: root
+      apt:
+        name: snampd.conf
+    - name: change snmpd.confq
+      become: true
+      become_user: root
+      lineinfile:
+        path: /etc/snmp/snmpd.conf
+        #regexp: "agentaddress 127.0.0.1,[::1]"
+        regexp: "master agentx"
+        line: "master yes"
+        state: present
+        backup: yes
+    - name: change snmpd.conf
+      become: true
+      become_user: root
+      lineinfile: 
+        path: /etc/snmp/snmpd.conf
+        regexp: "^agentaddress"
+        line: "agentaddress upd:161"
+        state: present
+        backup: yes
+    - name: change snmpd.conf
+      become: true
+      become_user: root
+      lineinfile:
+        path: /etc/snmp/snmpd.conf
+        regexp: "recommunity public default -V systemonly"
+        line: "rocommunity public"
+        state: present
+        backup: yes
+    - name: delete line in snmpd.com
+      become: true
+      become_user: root
+      lineinfile:
+        path: /etc/snmp/snmpd.conf
+        regexp: "rocommunity6 public default -V systemonly"
+        state: absent
+        backup: yes
+    - name: delete line in snmpd.com
+      become: true
+      become_user: root
+      lineinfile:
+        path: /etc/snmp/snmpd.conf
+        regexp: "rouser authPrivUser authpriv -V systemonly"
+        state: absent
+        backup: yes
+    - name: restart server snmpd 
+      become: true
+      service:
+        name: snmpd
+        state: restarted
