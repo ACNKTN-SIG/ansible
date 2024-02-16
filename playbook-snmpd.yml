@@ -1,5 +1,6 @@
 ---
 - hosts: all
+  become: true
   tasks: 
     - name: install snmp
       become: true
@@ -7,11 +8,8 @@
       apt:
         name: snmpd
     - name: change snmpd.conf part 1
-      become: true
-      #become_user: root
       lineinfile:
         path: /etc/snmp/snmpd.conf
-        #regexp: "agentaddress 127.0.0.1,[::1]"
         regexp: "master  agentx"
         line: "master yes"
         state: present
