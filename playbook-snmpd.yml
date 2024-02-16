@@ -5,7 +5,7 @@
       become: true
       become_user: root
       apt:
-        name: snampd.conf
+        name: snmpd.conf
     - name: change snmpd.confq
       become: true
       become_user: root
