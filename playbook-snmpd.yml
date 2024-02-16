@@ -6,7 +6,7 @@
       become_user: root
       apt:
         name: snmpd
-    - name: change snmpd.conf
+    - name: change snmpd.conf part 1
       become: true
       become_user: root
       lineinfile:
@@ -16,7 +16,7 @@
         line: "master yes"
         state: present
         backup: yes
-    - name: change snmpd.conf
+    - name: change snmpd.conf part 2
       become: true
       become_user: root
       lineinfile: 
@@ -25,7 +25,7 @@
         line: "agentaddress upd:161"
         state: present
         backup: yes
-    - name: change snmpd.conf
+    - name: change snmpd.conf part 3
       become: true
       become_user: root
       lineinfile:
